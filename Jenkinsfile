@@ -16,7 +16,7 @@ pipeline {
             steps {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "⚙️ Build de l’image Docker en cours...")
                 script {
-                    sh 'docker build -t ${IMAGE_NAME}:latest .'
+                    bat 'docker build -t ${IMAGE_NAME}:latest .'
                 }
                 echo '✅ Build terminé !'
             }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "🚢 Déploiement du conteneur en cours...")
                 script {
-                    sh '''
+                    bat '''
                     docker stop ${IMAGE_NAME} || true
                     docker rm ${IMAGE_NAME} || true
                     docker run -d --name ${IMAGE_NAME} -p 8080:80 ${IMAGE_NAME}:latest
