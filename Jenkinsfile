@@ -27,8 +27,6 @@ pipeline {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "🚢 Déploiement du conteneur en cours...")
                 script {
                     
-                    bat "docker stop ${IMAGE_NAME} || true"
-                    bat "docker rm ${IMAGE_NAME} || true"
                     bat "docker run -d --name ${IMAGE_NAME} -p 9080:80 ${IMAGE_NAME}:latest"
                     
                 }
@@ -39,6 +37,12 @@ pipeline {
     }
 
     post {
+        always {
+            script {
+                bat "docker stop ${IMAGE_NAME} || true"
+                bat "docker rm ${IMAGE_NAME} || true"
+            }
+        }
         failure {
             slackSend(channel: "${SLACK_CHANNEL}", message: "❌ Pipeline échoué à l’étape : ")
         }
