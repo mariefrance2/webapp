@@ -30,8 +30,8 @@ pipeline {
                     bat "docker run -d --name ${IMAGE_NAME} -p 9080:80 ${IMAGE_NAME}:latest"
                     
                 }
-                echo ' Application deployed on port 8080!'
-                slackSend(channel: "${SLACK_CHANNEL}", message: " Déploiement réussi sur le port 9080 🎉")
+                echo ' Application deployed on port 9080!'
+                slackSend(channel: "${SLACK_CHANNEL}", message: "Deployment on port 9080")
             }
         }
     }
