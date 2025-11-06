@@ -4,9 +4,7 @@ pipeline {
     stages {
 
         stage('Clone') {
-            when {
-                branch 'dev'
-            }
+           
             steps {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "🚀 Pipeline déclenché sur la branche dev (Clone en cours...)")
                 git branch: "${GITHUB_BRANCH}", url: 'https://github.com/mariefrance2/webapp.git'
