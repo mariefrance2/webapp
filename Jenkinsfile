@@ -1,17 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        SLACK_CHANNEL = '#notifications-jenkins'
-        SLACK_CREDENTIAL_ID = 'slack-token'
-        GITHUB_BRANCH = 'dev'
-        IMAGE_NAME = 'webapp_portfolio'
-    }
-
-    triggers {
-        githubPush() // 🔔 Déclenche à chaque commit sur la branche liée
-    }
-
     stages {
 
         stage('Clone') {
@@ -19,7 +8,7 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                slackSend(channel: "${SLACK_CHANNEL}", message: "🚀 Pipeline déclenché sur la branche *${env.BRANCH_NAME}* (Clone en cours...)")
+                slackSend(channel: "${SLACK_CHANNEL}", message: "🚀 Pipeline déclenché sur la branche dev (Clone en cours...)")
                 git branch: "${GITHUB_BRANCH}", url: 'https://github.com/mariefrance2/webapp.git'
                 echo '✅ Code cloné avec succès !'
             }
@@ -53,7 +42,7 @@ pipeline {
 
     post {
         failure {
-            slackSend(channel: "${SLACK_CHANNEL}", message: "❌ Pipeline échoué à l’étape : ${env.STAGE_NAME}")
+            slackSend(channel: "${SLACK_CHANNEL}", message: "❌ Pipeline échoué à l’étape : ")
         }
         success {
             slackSend(channel: "${SLACK_CHANNEL}", message: "🎯 Pipeline terminé avec succès !")
