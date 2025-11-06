@@ -16,7 +16,7 @@ pipeline {
             steps {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "⚙️ Build de l’image Docker en cours...")
                 script {
-                    bat 'docker build -t ${IMAGE_NAME}:latest .'
+                    bat "docker build -t ${IMAGE_NAME}:latest ."
                 }
                 echo '✅ Build terminé !'
             }
