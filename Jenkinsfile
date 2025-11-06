@@ -26,14 +26,14 @@ pipeline {
             steps {
                 slackSend(channel: "${SLACK_CHANNEL}", message: "🚢 Déploiement du conteneur en cours...")
                 script {
-                    bat '''
-                    docker stop ${IMAGE_NAME} || true
-                    docker rm ${IMAGE_NAME} || true
-                    docker run -d --name ${IMAGE_NAME} -p 8080:80 ${IMAGE_NAME}:latest
-                    '''
+                    
+                    bat "docker stop ${IMAGE_NAME} || true"
+                    bat "docker rm ${IMAGE_NAME} || true"
+                    bat "docker run -d --name ${IMAGE_NAME} -p 9080:80 ${IMAGE_NAME}:latest"
+                    
                 }
                 echo '✅ Application déployée sur le port 8080 !'
-                slackSend(channel: "${SLACK_CHANNEL}", message: "✅ Déploiement réussi sur le port 8080 🎉")
+                slackSend(channel: "${SLACK_CHANNEL}", message: "✅ Déploiement réussi sur le port 9080 🎉")
             }
         }
     }
